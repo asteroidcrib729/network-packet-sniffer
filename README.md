@@ -296,7 +296,11 @@ are recorded in [Plan 02](development-plan/development-plan-02.md).
 
 CI uses read-only permissions and pinned actions on Windows Server 2022/2025,
 with **3.14.7 as its sole Python version**. It checks the interpreter, locked sync,
-tests, lint, formatting, lockfile, and package build. Hosted execution is unverified.
+tests, lint, formatting, lockfile, and package build. Both runners passed
+[hosted CI](https://github.com/asteroidcrib729/network-packet-sniffer/actions/runs/40290432647).
+The [hosted installer preview](https://github.com/asteroidcrib729/network-packet-sniffer/actions/runs/40290458457)
+also passed build and EXE install/launch/uninstall checks; downloaded installer
+and source checksums were verified. See Plan 02 Section 10 for source provenance.
 Those checks do not establish live capture compatibility on other systems.
 
 I checked stable releases on 2026-10-26: [Ruff 0.17.2](https://github.com/astral-sh/ruff/releases/tag/0.17.2),

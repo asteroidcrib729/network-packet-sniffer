@@ -371,8 +371,8 @@ the locked development tool was downloaded into the new environment.
 - [ ] Repeat setup/live acceptance on another machine with no unrelated capture tools.
 - [ ] Exercise physical adapter disconnection and recovery during a real capture.
   I did not disconnect or reconfigure the user's active network to simulate this.
-- [ ] Run the prepared CI matrix after publication; no commit/push or hosted success
-  is implied by adding the workflow locally.
+- [x] Run the prepared CI matrix after pushing the source; both Windows runners
+  pass. Section 10 records the actual hosted run and installer preview evidence.
 - [ ] Validate automatic cross-monitor DPI adaptation before implementing/claiming it.
 
 These are environment/hardware/hosted-validation limits, not unchecked claims
@@ -411,7 +411,7 @@ of earlier versions; they do not define the current supported Python versions.
 | Artifacts | Source distribution and wheel build successfully; metadata requires `==3.14.7`, with zero runtime dependencies |
 | Artifact contents | No logs, caches, environment files, or old address list included |
 | Installed wheel | Imports work outside the repository; GUI entry point resolves; data uses Local AppData; generated EXE has Windows GUI subsystem 2 |
-| CI interpreter availability | uv 0.13.5 lists an exact Windows x64 CPython 3.14.7 download; hosted workflow remains unrun |
+| CI interpreter availability | uv 0.13.5 lists an exact Windows x64 CPython 3.14.7 download; subsequent hosted success is recorded in Section 10 |
 | Live GUI after refactor | Three-second capture: 80 processed summaries, zero display drops, one undecoded snapshot, no capture error |
 | Startup and completion | Administrator token present, no console attached, CAPTURE ENDED badge, redundant status hidden |
 | Capture cleanup | Pktmon inactive afterward; global filters remain None |
@@ -421,8 +421,8 @@ Only Python 3.14.7 was used for this update's execution and validation. The fres
 environment reused the verified exact interpreter and downloaded the pinned
 development/build artifacts. The wheel acceptance uses a second isolated 3.14.7
 environment. Results validate the local uncommitted source, not a published ref.
-External hardware/build/locale and hosted-CI acceptance remains as listed in
-Section 08.
+External hardware/build/locale acceptance remains as listed in Section 08.
+Subsequent hosted-CI evidence is recorded in Section 10.
 
 ## Section 10 — Implementation audit before Git delivery
 
@@ -434,4 +434,22 @@ workflow syntax, and protected-log checks also pass.
 The unchecked external acceptance items remain explicit: other Windows builds,
 locales/adapters, a separate clean machine, real physical disconnection, and
 mixed-monitor DPI behavior. They are not represented as completed by committing
-the implemented code. Hosted CI results will be recorded after the push.
+the implemented code.
+
+### First hosted acceptance after delivery
+
+Source commit: `623c95bfed522628315395cf673aa0fae97e9555` on `main`.
+
+| Check | Hosted result |
+| --- | --- |
+| Windows CI matrix | [Run 40290432647](https://github.com/asteroidcrib729/network-packet-sniffer/actions/runs/40290432647): Windows Server 2022 and 2025 both pass on Python 3.14.7 |
+| Checks per runner | All 113 tests, exact interpreter assertion, lint, formatting, lock validation, and wheel/source build pass |
+| Installer preview | [Run 40290458457](https://github.com/asteroidcrib729/network-packet-sniffer/actions/runs/40290458457): build and EXE install/GUI/close/uninstall smoke pass; draft job intentionally skipped |
+| Downloaded artifact | `installers-40290458457-1`, artifact ID `12635757362`; actual EXE, MSIX, and source ZIP downloaded and all release-manifest/SHA256SUMS checks pass |
+| Source provenance | Artifact source commit matches `623c95b`; `source_dirty=false`, Python 3.14.7, PyInstaller 6.22.3, Inno Setup 7.1.0 |
+
+This closes the hosted CI acceptance item. The installer MSIX remains preview
+signed: structure/CMS checks passed, but certificate trust and installation were
+not performed. No Git tag, draft release, or published release was created by
+the branch preview run. Production signing and other-machine/live-network checks
+retain the separate limits in Plan 03.

@@ -121,7 +121,8 @@ newer native APIs need external checks in Plan 02. Local fixtures are not those 
   longer supported or selected for this project.
 - [x] Use read-only, pinned Windows Server 2022/2025 CI for **3.14.7 only**,
   exact-version assertion, locked sync, tests, lint, formatting, lock and build
-  checks. Hosted execution is unverified.
+  checks. Hosted Windows checks and installer preview now pass; see Plan 02
+  Section 10 for the run evidence.
 - [x] Observe a longer live capture and its processing/display counters. Synthetic
   overflow tests separately prove optional logs retain processed records.
 - [x] Review IPv6 extensions: keep outer endpoints and `Unknown` where transport
@@ -139,9 +140,9 @@ newer native APIs need external checks in Plan 02. Local fixtures are not those 
 ## Section 06 — Completion criteria
 
 Repair, native-capture, GUI, and reputation implementation is locally verified as
-recorded here. The fresh environment uses a source snapshot of current uncommitted
-work; it is not described as a checkout of a published Git ref.
+recorded here. Earlier local fresh-environment checks used a source snapshot;
+hosted checks now validate committed source as recorded in Plan 02 Section 10.
 
-I have not marked hosted CI or unavailable hardware/Windows tests as passed.
-Plan 02 lists those external acceptance items separately. Console-stream limits,
+Hosted CI has passed. Unavailable hardware/Windows tests remain unchecked in
+Plan 02. Console-stream limits,
 source coverage/freshness, and cross-monitor DPI limits remain in the [README](../README.md).

@@ -86,11 +86,15 @@ kept separate from checks that were actually performed.
   trust on a dedicated test machine. No trust or UAC setting was changed here.
 - [ ] Exercise production signing with the owner's actual trusted certificate;
   no production PFX, password, or publisher identity was supplied.
-- [ ] Run and inspect hosted build/draft/publish workflows after the reviewed
-  source is committed/pushed/tagged. No repository release was published here.
+- [x] Run and inspect hosted Windows checks and installer preview after the
+  reviewed source is committed/pushed. Runs 40290432647 and 40290458457 pass;
+  actual hosted installer/source checksums and clean source metadata are verified.
+- [ ] Exercise draft refresh and release publication against a version tag when
+  a repository release is requested. No tag or repository release was created here.
 - [ ] Repeat both installation formats and live capture on another clean Windows
   machine. Other builds/adapters/locales retain Plan 02's acceptance limits.
 
-The local artifacts accurately identify the current source as uncommitted. They
-are preview builds, not artifacts claimed to originate from a published tag.
+Earlier local artifacts identify their source snapshot as uncommitted. The hosted
+preview artifact identifies committed source `623c95b` with `source_dirty=false`.
+Both are preview builds, not artifacts claimed to originate from a published tag.
 See the [packaging guide](../packaging/README.md) for exact operator steps.

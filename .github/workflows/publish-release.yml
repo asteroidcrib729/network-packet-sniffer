@@ -1,0 +1,44 @@
+name: Publish verified draft release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing draft release tag, for example v0.5.0
+        required: true
+        type: string
+      prerelease:
+        description: Publish as a prerelease (required for preview certificates)
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: windows-releases
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: windows-2025
+    timeout-minutes: 15
+    env:
+      UV_PYTHON: '3.14.7'
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_TAG: ${{ inputs.tag }}
+      PRERELEASE: ${{ inputs.prerelease }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+        with:
+          version: '0.13.5'
+          enable-cache: false
+      - name: Install exact verification environment
+        run: uv sync --locked --no-dev --python 3.14.7
+      - name: Verify draft and publish
+        shell: pwsh
+        run: ./packaging/publish-release.ps1 -Tag $env:RELEASE_TAG -Prerelease ($env:PRERELEASE -eq 'true')

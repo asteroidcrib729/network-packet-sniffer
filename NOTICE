@@ -1,0 +1,13 @@
+Network Packet Sniffer
+Copyright 2023-2026 Faraz Hussain
+
+Original author: Faraz Hussain (asteroidcrib729)
+Project: https://github.com/asteroidcrib729/network-packet-sniffer
+Originally created as an academic project in Q4 2023.
+
+Licensed under the Apache License, Version 2.0. Redistributions must comply
+with its attribution and NOTICE requirements. This notice does not modify
+the license or imply endorsement of derived projects by the original author.
+
+Bundled Python, Tcl/Tk, and other third-party components retain their own
+licenses. Their notices accompany the packaged application.

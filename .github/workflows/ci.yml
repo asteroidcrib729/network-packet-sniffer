@@ -1,0 +1,43 @@
+name: Windows checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: ${{ matrix.os }} / Python 3.14.7
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    env:
+      UV_PYTHON: '3.14.7'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2022, windows-2025]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+        with:
+          version: '0.13.5'
+          enable-cache: false
+      - name: Install locked development environment
+        run: uv sync --locked --python 3.14.7
+      - name: Verify exact Python version
+        run: uv run --locked python -c "import sys; assert tuple(sys.version_info) == (3, 14, 7, 'final', 0), sys.version"
+      - name: Run offline and native-console regressions
+        run: uv run --locked python -m unittest discover -s tests -v
+      - name: Lint
+        run: uv run --locked ruff check .
+      - name: Check formatting
+        run: uv run --locked ruff format --check .
+      - name: Check lockfile
+        run: uv lock --check
+      - name: Build package
+        run: uv build
